@@ -1,0 +1,11 @@
+:root{--honey:#f4b23a;--amber:#b87417;--brown:#4b2e16;--bg:#fffaf1;--panel:#fff;--line:#f1d19a}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Cairo","Tajawal",sans-serif;background:var(--bg);color:var(--brown)}
+.topbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;background:linear-gradient(130deg,#4b2e16,#6f431e);padding:16px 24px;color:#fff;box-shadow:0 4px 14px #0003}
+.brand{display:flex;gap:14px;align-items:center}.logo{width:86px;height:86px;object-fit:contain;background:#fff2;border-radius:12px;padding:8px}
+h1{margin:0;font-size:1.5rem;color:var(--honey)}p{margin:.25rem 0 0;color:#f8deb4}
+.topnav a{color:#fff;background:#ffffff22;padding:8px 12px;border-radius:10px;text-decoration:none;margin-inline-start:6px}
+.container{padding:22px;max-width:1100px;margin:auto}.hero{background:var(--panel);border:1px solid var(--line);padding:14px 18px;border-radius:14px;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;transition:.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 5px 16px #0001}.icon{font-size:1.9rem}.panel{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:14px}
+.btn{display:inline-block;padding:10px 14px;background:var(--amber);color:#fff;border-radius:10px;text-decoration:none}.footer{text-align:center;padding:16px;color:#7a5835}

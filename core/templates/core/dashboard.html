@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block title %}الرئيسية | نظام الشهابي{% endblock %}
+{% block content %}
+<section class="hero">
+  <h2>مرحبًا بك</h2>
+  <p>الدور الحالي: <strong>{{ role }}</strong></p>
+</section>
+<section class="cards">
+  {% for module in modules %}
+    <a class="card" href="/{% if module.url %}{{ module.url }}/{% endif %}?role={{ role }}">
+      <div class="icon">{{ module.icon }}</div>
+      <h3>{{ module.name }}</h3>
+    </a>
+  {% endfor %}
+</section>
+{% endblock %}
