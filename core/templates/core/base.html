@@ -17,11 +17,22 @@
     </div>
   </div>
   <nav class="topnav">
-    <a href="/?role=admin">وضع المدير</a>
-    <a href="/?role=owner">وضع الصاحب</a>
-    <a href="/?role=worker">وضع العامل</a>
+    {% if employee %}
+      <span>مرحبًا: {{ employee.full_name }} ({{ employee.get_role_display }})</span>
+      <a href="{% url 'dashboard' %}">الرئيسية</a>
+      <a href="{% url 'logout' %}">خروج</a>
+    {% else %}
+      <a href="{% url 'login' %}">تسجيل الدخول</a>
+    {% endif %}
   </nav>
 </header>
+{% if messages %}
+<section class="container">
+  {% for message in messages %}
+    <p>{{ message }}</p>
+  {% endfor %}
+</section>
+{% endif %}
 <main class="container">{% block content %}{% endblock %}</main>
 <footer class="footer">© الشهابي للعسل الحضري</footer>
 </body>

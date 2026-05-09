@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block title %}الحسابات | نظام الشهابي{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>الحسابات العامة (المدير)</h2>
+  <table>
+    <thead><tr><th>الحساب</th><th>النوع</th><th>الرصيد (SAR)</th></tr></thead>
+    <tbody>
+      {% for acc in accounts %}
+      <tr>
+        <td>{{ acc.name }}</td>
+        <td>{{ acc.get_kind_display }}</td>
+        <td>{{ acc.balance_sar }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">لا توجد حسابات.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
