@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% block title %}العمليات | نظام الشهابي{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>سجل العمليات</h2>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <a href="?filter=all">الكل</a><a href="?filter=sale">بيع</a><a href="?filter=stock">بضاعة</a>
+    <a href="?filter=add">إضافة</a><a href="?filter=purchase">مشتريات</a><a href="?filter=settlement">تسديد</a>
+    <a href="?filter=edit">تعديل</a><a href="?filter=supplier_discount">خصم مورد</a>
+  </div>
+  <table>
+    <thead><tr><th>التاريخ</th><th>العنوان</th><th>تفاصيل</th><th>فتح</th><th>حذف</th></tr></thead>
+    <tbody>
+      {% for op in operations %}
+      <tr>
+        <td>{{ op.created_at|date:"Y-m-d H:i" }}</td>
+        <td>{{ op.title }}</td>
+        <td>{% if op.details.items_count %}{{ op.details.items_count }} صنف - {% endif %}{{ op.details.currency|default:"" }} {{ op.details.account_type|default:"" }}</td><td>{% if op.details.target_url %}<a href="{{ op.details.target_url }}">فتح</a>{% else %}-{% endif %}</td>
+        <td>
+          {% if op.details.sale_id %}
+          <form method="post" action="{% url 'delete_sale_operation' op.details.sale_id %}">{% csrf_token %}<button type="submit">🗑️</button></form>
+          {% else %}-{% endif %}
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="5">لا توجد عمليات.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

@@ -2,15 +2,17 @@
 {% block title %}الرئيسية | نظام الشهابي{% endblock %}
 {% block content %}
 <section class="hero">
-  <h2>مرحبًا بك</h2>
-  <p>الدور الحالي: <strong>{{ role }}</strong></p>
+  <h2>مرحبًا بك {{ employee.full_name }}</h2>
+  <p>الدور الحالي: <strong>{{ employee.get_role_display }}</strong></p>
 </section>
 <section class="cards">
   {% for module in modules %}
-    <a class="card" href="/{% if module.url %}{{ module.url }}/{% endif %}?role={{ role }}">
+    <a class="card" href="/{% if module.url %}{{ module.url }}/{% endif %}">
       <div class="icon">{{ module.icon }}</div>
       <h3>{{ module.name }}</h3>
     </a>
+  {% empty %}
+    <p>لا توجد وحدات متاحة لك حاليًا. راجع المدير لإعداد الصلاحيات.</p>
   {% endfor %}
 </section>
 {% endblock %}

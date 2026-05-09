@@ -4,6 +4,6 @@
 <section class="panel">
   <h2>{{ title }}</h2>
   <p>هذه صفحة أولية للوحدة. سنكمل منطقها بالتفصيل في المرحلة القادمة.</p>
-  <a class="btn" href="/?role={{ role }}">العودة للرئيسية</a>
+  <a class="btn" href="{% url 'dashboard' %}">العودة للرئيسية</a>
 </section>
 {% endblock %}

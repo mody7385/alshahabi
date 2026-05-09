@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block title %}تفاصيل البيع | نظام الشهابي{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>تفاصيل البيع #{{ sale.id }}</h2>
+  <p>الفرع: {{ sale.branch.name }} | العملة: {{ sale.get_currency_display }} | نوع الحساب: {{ sale.get_account_type_display }}</p>
+  <p>الإجمالي: {{ sale.total_amount_input }} (مدخل) / {{ sale.total_amount_sar }} ر.س</p>
+  <table>
+    <thead><tr><th>الصنف</th><th>الدبة</th><th>كجم</th><th>سعر الوحدة</th></tr></thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.product_name_snapshot }}</td>
+        <td>{{ item.dabba_qty }}</td>
+        <td>{{ item.kg_qty }}</td>
+        <td>{{ item.unit_price_input }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">لا توجد عناصر.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
