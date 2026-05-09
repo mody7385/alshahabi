@@ -14,18 +14,12 @@
     </select>
   </form>
 
-  <form method="post">
+  <form method="post" id="sale-form">
     {% csrf_token %}
     <input type="hidden" name="branch_id" value="{{ selected_branch_id }}">
-    {% for i in '123' %}
-    <fieldset style="margin-bottom:10px"><legend>صنف {{ forloop.counter }}</legend>
-      <label>الصنف/المخزون</label>
-      <select name="inventory_id"><option value="">--</option>{% for inv in inventories %}<option value="{{ inv.id }}">{{ inv.product.name }} ({{ inv.dabba_count }} دبة / {{ inv.kg_amount }} كجم)</option>{% endfor %}</select>
-      <label>عدد الدبات</label><input type="number" step="0.01" name="dabba_qty" value="0">
-      <label>الكمية بالكجم</label><input type="number" step="0.01" name="kg_qty" value="0">
-      <label>سعر الوحدة</label><input type="number" step="0.01" name="unit_price_input" value="0">
-    </fieldset>
-    {% endfor %}
+
+    <div id="sale-lines"></div>
+    <button type="button" onclick="addLine()">+ إضافة صنف</button>
 
     <label>نوع الحساب</label>
     <select name="account_type">
@@ -36,7 +30,11 @@
 
     {% if employee.role != 'owner' %}
     <label>العملة</label>
-    <select name="currency"><option value="SAR" {% if pref.last_currency == 'SAR' %}selected{% endif %}>SAR</option><option value="YER_BIG" {% if pref.last_currency == 'YER_BIG' %}selected{% endif %}>YER_BIG</option><option value="YER_SMALL" {% if pref.last_currency == 'YER_SMALL' %}selected{% endif %}>YER_SMALL</option></select>
+    <select name="currency">
+      <option value="SAR" {% if pref.last_currency == 'SAR' %}selected{% endif %}>SAR</option>
+      <option value="YER_BIG" {% if pref.last_currency == 'YER_BIG' %}selected{% endif %}>YER_BIG</option>
+      <option value="YER_SMALL" {% if pref.last_currency == 'YER_SMALL' %}selected{% endif %}>YER_SMALL</option>
+    </select>
     {% endif %}
 
     <label>العميل (اختياري)</label>
@@ -46,4 +44,32 @@
     <button type="submit">حفظ البيع</button>
   </form>
 </section>
+
+<template id="line-template">
+  <fieldset style="margin-bottom:10px" class="sale-line">
+    <legend>صنف <span class="line-number"></span></legend>
+    <label>الصنف/المخزون</label>
+    <select name="inventory_id"><option value="">--</option>{% for inv in inventories %}<option value="{{ inv.id }}">{{ inv.product.name }} ({{ inv.dabba_count }} دبة / {{ inv.kg_amount }} كجم)</option>{% endfor %}</select>
+    <label>عدد الدبات</label><input type="number" step="0.01" name="dabba_qty" value="0">
+    <label>الكمية بالكجم</label><input type="number" step="0.01" name="kg_qty" value="0">
+    <label>سعر الوحدة</label><input type="number" step="0.01" name="unit_price_input" value="0">
+    <button type="button" onclick="removeLine(this)">- حذف الصنف</button>
+  </fieldset>
+</template>
+
+<script>
+function refreshLineNumbers(){
+  document.querySelectorAll('.sale-line .line-number').forEach((el,idx)=>el.textContent = idx+1)
+}
+function addLine(){
+  const tpl = document.getElementById('line-template').content.cloneNode(true);
+  document.getElementById('sale-lines').appendChild(tpl);
+  refreshLineNumbers();
+}
+function removeLine(btn){
+  btn.closest('.sale-line').remove();
+  refreshLineNumbers();
+}
+addLine();
+</script>
 {% endblock %}
